@@ -1,0 +1,9 @@
+/build
+/gradle
+*.kts
+*.properties
+*.bat
+gradlew
+*.pro
+.gradle/
+.idea/
