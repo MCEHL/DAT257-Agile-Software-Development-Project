@@ -14,4 +14,34 @@ public class DisplayInput {
             return "Weather data unavailable";
         }
     }
+
+    //används inte nu, hårdkodat så !rain=sol :/
+    public String getWeatherType(JSONObject weatherJson) {
+        try {
+            double rain = weatherJson.getDouble("rain");
+
+            if (rain > 0) {
+                return "rain";
+            } else {
+                return "sun";
+            }
+
+        } catch (Exception e) {
+            return "unknown";
+        }
+    }
+
+    public int displayWeatherIcon(JSONObject weatherJson) {
+        try {
+            double rain = weatherJson.getDouble("rain");
+
+            if (rain > 0) {
+                return R.drawable.baseline_water_drop_24;
+            }
+            return 0; // inga fler ikoner ännu
+
+        } catch (Exception e) {
+            return 0;
+        }
+    }
 }
