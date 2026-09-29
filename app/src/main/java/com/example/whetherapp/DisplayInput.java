@@ -13,30 +13,6 @@ public class DisplayInput {
         }
     }
 
-    /*
-    //Flyttar till weatherAnalyzer
-    Används inte nu, hårdkodade värden för när vi skriver regn och sol
-    public String getWeatherType(JSONObject weatherJson) {
-        try {
-            double rain = weatherJson.getDouble("rain");
-
-            if (rain > 0) {
-                return "Rain: " + rain + " mm";
-            } else {
-                return "No rain expected";
-            }
-
-        } catch (Exception e) {
-            return "unknown";
-        }
-        try {
-            double sun = weatherJson.getDouble("sun");
-        }
-        catch (Exception e) {
-            return "unknown";
-        }
-    }
-    */
     public int displayWeatherIcon(String weatherType) {
 
         if (weatherType.equals("rain")) {
