@@ -1,47 +1,52 @@
 package com.example.whetherapp;
-import org.json.JSONObject;
+//import org.json.JSONObject;
 
 public class DisplayInput {
     public String Weather = "SOL";
     public String recomendation = "Today could be a good day to dry laundry outside!";
 
-    public String displayWeather(JSONObject weatherJson){
-        try{
-            double rain = weatherJson.getDouble("rain");
-            return "Rain: " + rain + " mm/h";
-        }
-        catch(Exception e){
-            return "Weather data unavailable";
+    public String displayWeather(double rain) {
+        if (rain > 0) {
+            return "Rain: " + rain + " mm";
+        } else {
+            return "No rain expected";
         }
     }
 
-    //används inte nu, hårdkodat så !rain=sol :/
+    /*
+    //Flyttar till weatherAnalyzer
+    Används inte nu, hårdkodade värden för när vi skriver regn och sol
     public String getWeatherType(JSONObject weatherJson) {
         try {
             double rain = weatherJson.getDouble("rain");
 
             if (rain > 0) {
-                return "rain";
+                return "Rain: " + rain + " mm";
             } else {
-                return "sun";
+                return "No rain expected";
             }
 
         } catch (Exception e) {
             return "unknown";
         }
-    }
-
-    public int displayWeatherIcon(JSONObject weatherJson) {
         try {
-            double rain = weatherJson.getDouble("rain");
-
-            if (rain > 0) {
-                return R.drawable.baseline_water_drop_24;
-            }
-            return R.drawable.baseline_wb_sunny_24;
-
-        } catch (Exception e) {
-            return 0;
+            double sun = weatherJson.getDouble("sun");
         }
+        catch (Exception e) {
+            return "unknown";
+        }
+    }
+    */
+    public int displayWeatherIcon(String weatherType) {
+
+        if (weatherType.equals("rain")) {
+            return R.drawable.baseline_water_drop_24;
+        }
+
+        if (weatherType.equals("sun")) {
+            return R.drawable.baseline_wb_sunny_24;
+        }
+
+        return 0;
     }
 }

@@ -39,12 +39,15 @@ public class MainActivity extends AppCompatActivity {
         TextView textView = findViewById(R.id.textView2);
         DisplayInput displayInput2 = new DisplayInput();
        //textView.setText(displayInput2.Weather);// ändrar så klassen DisplayInput används.
-        textView.setText(displayInput2.displayWeather(weatherJson));
+
+        WeatherAnalyzer weatherAnalyzer = new WeatherAnalyzer();//Två rader tillagda så weatherAnalyzer används
+        double rain = weatherAnalyzer.getRain(weatherJson);
+        String weatherType = weatherAnalyzer.getWeatherType(weatherJson);
+        textView.setText(displayInput.displayWeather(rain));
 
         //---Nytt för att testa ikonanvändning beroende på väderprognos
-
         ImageView weatherIcon = findViewById(R.id.rainIcon);
-        weatherIcon.setImageResource(displayInput.displayWeatherIcon(weatherJson));
+        weatherIcon.setImageResource(displayInput.displayWeatherIcon(weatherType));
         //
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
