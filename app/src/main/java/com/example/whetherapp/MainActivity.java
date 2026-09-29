@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,14 +18,27 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
+        // ---------------------------------
+        // TEST JSON
+        // ---------------------------------
+        JSONObject weatherJson = new JSONObject();
+
+        try {
+            weatherJson.put("rain", 1.0);
+
+        } catch (Exception e) {
+
+        }
+
         TextView textView2 = findViewById(R.id.textView3);
         DisplayInput displayInput = new DisplayInput();
         textView2.setText(displayInput.recomendation);// ändrar så klassen DisplayInput används.
 
         TextView textView = findViewById(R.id.textView2);
         DisplayInput displayInput2 = new DisplayInput();
-        textView.setText(displayInput2.Weather);// ändrar så klassen DisplayInput används.
-        
+       //textView.setText(displayInput2.Weather);// ändrar så klassen DisplayInput används.
+        textView.setText(displayInput2.displayWeather(weatherJson));
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
