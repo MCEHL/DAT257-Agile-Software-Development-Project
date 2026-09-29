@@ -38,7 +38,7 @@ public class DisplayInput {
             if (rain > 0) {
                 return R.drawable.baseline_water_drop_24;
             }
-            return 0; // inga fler ikoner ännu
+            return R.drawable.baseline_wb_sunny_24;
 
         } catch (Exception e) {
             return 0;
