@@ -9,6 +9,7 @@ public class WeatherDay {
     private final double minTemperatureC; // Lowest temperature in the day, in °C.
     private final double maxTemperatureC; // Highest temperature in the day, in °C.
     private final double windSpeedMs;     // Wind speed, in m/s.
+
     public WeatherDay(double precipitationMm, double minTemperatureC, double maxTemperatureC, double windSpeedMs){
         this.precipitationMm = precipitationMm;
         this.minTemperatureC = minTemperatureC;
