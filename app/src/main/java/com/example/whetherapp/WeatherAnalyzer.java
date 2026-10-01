@@ -12,9 +12,15 @@ public class WeatherAnalyzer {
     public String getWeatherType(JSONObject weatherJson) {
         try {
             double rain = weatherJson.getDouble("rain");
+            boolean sunny = weatherJson.getBoolean("sunny");
+
             if (rain > 0) {
                 return "rain";
             }
+            if (sunny){
+                return "sun";
+            }
+
             return "unknown";
         } catch (Exception e) {
             return "unknown";

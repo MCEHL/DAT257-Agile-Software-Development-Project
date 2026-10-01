@@ -25,7 +25,8 @@ public class MainActivity extends AppCompatActivity {
         JSONObject weatherJson = new JSONObject();
 
         try {
-            weatherJson.put("rain", 1.0);
+            weatherJson.put("rain", 0.0);
+            weatherJson.put("sunny", true);
 
         } catch (Exception e) {
 
