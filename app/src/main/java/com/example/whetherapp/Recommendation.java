@@ -10,7 +10,6 @@ public class Recommendation {
     public Recommendation(String text, double precipitationMm) {
         this.text = text;
         this.precipitationMm = precipitationMm;
-        //this.condition = condition;
     }
 
     public String getText() {
