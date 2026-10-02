@@ -1,10 +1,12 @@
 app/build/
+/build/
 /gradle
-*.kts
+
 *.properties
 *.bat
 gradlew
 *.pro
 .gradle/
 .idea/
+*/build/
 *.iml
