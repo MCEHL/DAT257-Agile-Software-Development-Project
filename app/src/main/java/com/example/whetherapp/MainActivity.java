@@ -2,6 +2,7 @@ package com.example.whetherapp;
 
 import android.os.Bundle;
 
+import android.widget.Button;
 import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -106,8 +107,10 @@ public class MainActivity extends AppCompatActivity {
         weatherIcon.setImageResource(displayInput.displayWeatherIcon(weatherType));
         //
 
-        //---Popup med rekommendation för dagens väder
-        new RecommendationPopup().show(MainActivity.this, today);
+        //---Popup med rekommendation för dagens väder när man trycker på "This Week"
+        RecommendationPopup recommendationPopup = new RecommendationPopup();
+        Button weekButton = findViewById(R.id.button);
+        weekButton.setOnClickListener(v -> recommendationPopup.show(MainActivity.this, today));
 
         });
         }).start();
