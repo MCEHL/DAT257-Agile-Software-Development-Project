@@ -1,5 +1,6 @@
 package com.example.whetherapp;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 public class RecommendationHandler {
 
@@ -9,6 +10,10 @@ public class RecommendationHandler {
         recommendations.add(new Recommendation("Do not water your lawn and plants today. The rain does it for you and you save water.",
                 0.5));
         recommendations.add(new Recommendation("Water your lawn and plants so they will grow and thrive.", 0.0));
+    }
+
+    public List<Recommendation> getRecommendations() {
+        return Collections.unmodifiableList(recommendations);
     }
 
     /*private String recommendation_today;
