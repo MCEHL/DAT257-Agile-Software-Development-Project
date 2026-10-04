@@ -106,6 +106,9 @@ public class MainActivity extends AppCompatActivity {
         weatherIcon.setImageResource(displayInput.displayWeatherIcon(weatherType));
         //
 
+        //---Popup med rekommendation för dagens väder
+        new RecommendationPopup().show(MainActivity.this, today);
+
         });
         }).start();
 
