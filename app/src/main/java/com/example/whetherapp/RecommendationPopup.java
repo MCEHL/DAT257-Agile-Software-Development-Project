@@ -10,7 +10,7 @@ import java.util.Locale;
  */
 public class RecommendationPopup {
 
-    private final RecommendationHandler recommendationHandler = new RecommendationHandler();
+    private final RecommendationHandler recommendationHandler = RecommendationHandler.getInstance(); // Ändrat denna rad på RecommendationHandler är en singleton.
     private final WeatherAnalyzer weatherAnalyzer = new WeatherAnalyzer();
     private final DisplayInput displayInput = new DisplayInput();
 

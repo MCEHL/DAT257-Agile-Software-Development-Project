@@ -96,23 +96,24 @@ public class MainActivity extends AppCompatActivity {
             double rain = weatherAnalyzer.getRain(today);
             String weatherType = weatherAnalyzer.getWeatherType(today);
 
+            RecommendationHandler recommendationHandler = RecommendationHandler.getInstance();
+            recommendationHandler.compareToday(new ArrayList<>(recommendationHandler.getRecommendations()), today);
 
         runOnUiThread(() -> {
+            textView2.setText(displayInput.displayRecommendation(RecommendationHandler.getInstance().getCurrentRecommendation().getText()));
+            textView.setText(displayInput.displayWeather(rain));
 
-        textView2.setText(displayInput.recomendation);// ändrar så klassen DisplayInput används.
-        textView.setText(displayInput.displayWeather(rain));
+            //---Nytt för att testa ikonanvändning beroende på väderprognos
+            ImageView weatherIcon = findViewById(R.id.rainIcon);
+            weatherIcon.setImageResource(displayInput.displayWeatherIcon(weatherType));
+            //
 
-        //---Nytt för att testa ikonanvändning beroende på väderprognos
-        ImageView weatherIcon = findViewById(R.id.rainIcon);
-        weatherIcon.setImageResource(displayInput.displayWeatherIcon(weatherType));
-        //
+            //---Popup med rekommendation för dagens väder när man trycker på "This Week"
+            RecommendationPopup recommendationPopup = new RecommendationPopup();
+            Button weekButton = findViewById(R.id.button);
+            weekButton.setOnClickListener(v -> recommendationPopup.show(MainActivity.this, today));
 
-        //---Popup med rekommendation för dagens väder när man trycker på "This Week"
-        RecommendationPopup recommendationPopup = new RecommendationPopup();
-        Button weekButton = findViewById(R.id.button);
-        weekButton.setOnClickListener(v -> recommendationPopup.show(MainActivity.this, today));
-
-        });
+            });
         }).start();
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {

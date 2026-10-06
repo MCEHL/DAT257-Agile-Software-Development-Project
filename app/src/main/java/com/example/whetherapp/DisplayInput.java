@@ -5,8 +5,6 @@ public class DisplayInput {
     // public String Weather = "SOL";
     // public String recomendation = "Today could be a good day to dry laundry outside!";
 
-    private RecommendationHandler recommendationHandler;
-
     public String displayWeather(double rain) {
         if (rain > 0) {
             return "Rain: " + rain + " mm";
@@ -28,8 +26,8 @@ public class DisplayInput {
         return 0;
     }
 
-    public String displayRecommendation() {
-        return RecommendationHandler.getInstance().getCurrentRecommendation().getText();
+    public String displayRecommendation(String recommendation) {
+        return recommendation;
     }
 }
 
