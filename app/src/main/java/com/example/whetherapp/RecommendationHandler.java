@@ -4,57 +4,68 @@ import java.util.Collections;
 import java.util.List;
 public class RecommendationHandler {
 
+    private static RecommendationHandler instance;
     private final List<Recommendation> recommendations = new ArrayList<>();
+    private Recommendation currentRecommendation;
 
-    public RecommendationHandler() {
+    private RecommendationHandler() {
+        // Recommendations for today
         recommendations.add(new Recommendation("Do not water your lawn and plants today. The rain does it for you and you save water.",
                 0.5));
         recommendations.add(new Recommendation("Water your lawn and plants so they will grow and thrive.", 0.0));
+        // Recommendations for the entire week
+        recommendations.add(new Recommendation("Do not water your lawn and plants this week. The rain does it for you and you save water.",
+                4.0));
+        recommendations.add(new Recommendation("Water your lawn and plants this week so they will grow and thrive.", 0.5));
+    }
+
+    public static RecommendationHandler getInstance() {
+        if (instance == null) instance = new RecommendationHandler();
+        return instance;
     }
 
     public List<Recommendation> getRecommendations() {
         return Collections.unmodifiableList(recommendations);
     }
 
-    /*private String recommendation_today;
-
-    RecommendationHandler()
-    {
-        this.recommendation_today = recommendation_today;
-    }
-
-    public String getRecommendation_today() {
-        return recommendation_today;
-    }
-
-
-    /**takes wheter data and sends a recommendation to the user
-     *
-     * @param wheterinput
+    /**
+     * Compare recommendations with today's forecast
+     * @param recommendations A list of recommendations
+     * @param dayForecast Today´s forecast
      */
-    /*public void wheter(String wheterinput, String wheterinputToMorov)
-    {
-        String temp = wheterinput;
-        String temp2 = wheterinputToMorov;
+    public void compareToday(ArrayList<Recommendation> recommendations, DayForecast dayForecast) {
+        currentRecommendation = null;
+        for (Recommendation recommendation : recommendations) {{
+                if (dayForecast.getMaxAmountRain() >= recommendation.getPrecipitationMm()
+                        && (currentRecommendation == null
+                        || recommendation.getPrecipitationMm() > currentRecommendation.getPrecipitationMm())) {
+                            currentRecommendation = recommendation;
+                            }
+                }
+        }
+    }
 
-        //rägn i dag
-        if(temp.equals("Rain"))
-        {
-           this.recommendation_today = "Du bör inte vatna blommorna i dag";
+    /**
+     * Compare recommendations with forecasts for the upcoming 7-seven days
+     * @param recommendations A list of recommendations
+     * @param forecasts The entire week´s forecasts
+     */
+    public void compare7days(ArrayList<Recommendation> recommendations, List<DayForecast> forecasts) {
+        currentRecommendation = null;
+        for (Recommendation recommendation : recommendations) {
+            for (DayForecast forecast : forecasts) {
+                if (forecast.getMaxAmountRain() >= recommendation.getPrecipitationMm()
+                        && (currentRecommendation == null
+                        || recommendation.getPrecipitationMm() > currentRecommendation.getPrecipitationMm())) {
+                    currentRecommendation = recommendation;
+                }
+            }
         }
-        //rägn i mon
-        else if(temp2.equals("Rain"))
-        {
-            this.recommendation_today = "Du bör inte vatna blomorna i dag";
-        }
-        //sol i dag och sol i morgon
-        else if((temp.equals("Sol")) && (temp2.equals("Sol")))
-        {
-            this.recommendation_today = "Det är en bra dag att vatna blomorna i dag";
-        }
-        else
-        {
-            this.recommendation_today = "gör vad du vill";
-        }
-    }*/
+    }
+
+    public Recommendation getCurrentRecommendation() {
+        return currentRecommendation;
+    }
+
 }
+

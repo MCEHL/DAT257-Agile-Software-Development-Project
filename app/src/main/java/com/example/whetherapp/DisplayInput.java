@@ -2,8 +2,8 @@ package com.example.whetherapp;
 //import org.json.JSONObject;
 
 public class DisplayInput {
-    public String Weather = "SOL";
-    public String recomendation = "Today could be a good day to dry laundry outside!";
+    // public String Weather = "SOL";
+    // public String recomendation = "Today could be a good day to dry laundry outside!";
 
     public String displayWeather(double rain) {
         if (rain > 0) {
@@ -25,4 +25,9 @@ public class DisplayInput {
 
         return 0;
     }
+
+    public String displayRecommendation(String recommendation) {
+        return recommendation;
+    }
 }
+
