@@ -106,13 +106,6 @@ public class MainActivity extends AppCompatActivity {
             //---Nytt för att testa ikonanvändning beroende på väderprognos
             ImageView weatherIcon = findViewById(R.id.rainIcon);
             weatherIcon.setImageResource(displayInput.displayWeatherIcon(weatherType));
-            //
-
-            //---Popup med rekommendation för dagens väder när man trycker på "This Week"
-            RecommendationPopup recommendationPopup = new RecommendationPopup();
-            Button weekButton = findViewById(R.id.button);
-            weekButton.setOnClickListener(v -> recommendationPopup.show(MainActivity.this, today));
-
             });
         }).start();
 
