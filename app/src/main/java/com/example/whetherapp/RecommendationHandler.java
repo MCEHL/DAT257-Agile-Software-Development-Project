@@ -13,10 +13,6 @@ public class RecommendationHandler {
         recommendations.add(new Recommendation("Do not water your lawn and plants today. The rain does it for you and you save water.",
                 0.5));
         recommendations.add(new Recommendation("Water your lawn and plants so they will grow and thrive.", 0.0));
-        // Recommendations for the entire week
-        recommendations.add(new Recommendation("Do not water your lawn and plants this week. The rain does it for you and you save water.",
-                4.0));
-        recommendations.add(new Recommendation("Water your lawn and plants this week so they will grow and thrive.", 0.5));
     }
 
     public static RecommendationHandler getInstance() {
