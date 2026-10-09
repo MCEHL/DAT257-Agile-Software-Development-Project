@@ -1,5 +1,6 @@
 package com.example.whetherapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.widget.Button;
@@ -26,6 +27,11 @@ public class MainActivity extends AppCompatActivity {
 
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+        Button upcomingButton = findViewById(R.id.button);
+        upcomingButton.setOnClickListener(v ->{
+            Intent intent = new Intent(MainActivity.this, UpcomingSevenDays.class);
+            startActivity(intent);
+        });
 
 
         //---API anrop
