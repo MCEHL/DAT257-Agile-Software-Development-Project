@@ -2,6 +2,7 @@ package com.example.whetherapp;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,6 +28,7 @@ public class UpcomingSevenDays extends AppCompatActivity {
         RecyclerView dayList = findViewById(R.id.dayList);
         // Lägger korten under varandra. Utan LayoutManager visas ingenting.
         dayList.setLayoutManager(new LinearLayoutManager(this));
+        dayList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         dayList.setAdapter(new DayAdapter(createUpcomingDays())); // Kopplar dagarna till listan via adaptern.
     }
 
