@@ -9,45 +9,72 @@
                                                    android:layout_height="wrap_content"
                                                    android:padding="16dp">
 
+    <!-- Column lines: the weather starts at 25 % and the recommendation at 55 % of the width. -->
     <androidx.constraintlayout.widget.Guideline
-            android:orientation="vertical"
+            android:id="@+id/weatherColumn"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" app:layout_constraintGuide_percent="0.55"
-            android:id="@+id/recommendationColumn"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.25"/>
+
     <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/recommendationColumn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" app:layout_constraintGuide_percent="0.25"
-            android:id="@+id/weatherColumn"/>
+            app:layout_constraintGuide_percent="0.55"/>
+
     <TextView
+            android:id="@+id/dayName"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/dayName"
-            app:layout_constraintStart_toStartOf="parent" tools:text="Monday"
-            app:layout_constraintTop_toTopOf="parent" android:textSize="16sp" android:textStyle="bold"/>
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceTitleMedium"
+            tools:text="Monday"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
     <TextView
+            android:id="@+id/dayDate"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/dayDate"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:textColor="?android:attr/textColorSecondary"
+            tools:text="12 Oct"
             app:layout_constraintTop_toBottomOf="@id/dayName"
-            android:layout_marginTop="4dp" tools:text="12 Oct" app:layout_constraintStart_toStartOf="parent"/>
-    <ImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp" tools:srcCompat="@drawable/baseline_water_drop_24"
-            android:id="@+id/weatherIcon"
-            app:layout_constraintStart_toStartOf="@id/weatherColumn"
-            app:layout_constraintEnd_toStartOf="@id/recommendationColumn"
-            app:layout_constraintTop_toBottomOf="@+id/weatherText" android:layout_marginTop="20dp"/>
+            app:layout_constraintStart_toStartOf="parent"/>
+
     <TextView
+            android:id="@+id/weatherText"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/weatherText"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
             tools:text="Rain: 2.5 mm"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="@id/weatherColumn"
-            android:layout_marginTop="4dp" app:layout_constraintEnd_toStartOf="@+id/recommendationColumn"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="@id/weatherColumn"
+            app:layout_constraintEnd_toStartOf="@id/recommendationColumn"/>
+
+    <ImageView
+            android:id="@+id/weatherIcon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="20dp"
+            tools:srcCompat="@drawable/baseline_water_drop_24"
+            app:layout_constraintTop_toBottomOf="@id/weatherText"
+            app:layout_constraintStart_toStartOf="@id/weatherColumn"
+            app:layout_constraintEnd_toStartOf="@id/recommendationColumn"/>
+
     <TextView
+            android:id="@+id/recommendationText"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" android:id="@+id/recommendationText"
-            tools:text='Do not water your lawn and plants today. The rain does it for you and you save water.'
-            app:layout_constraintStart_toStartOf="@id/recommendationColumn" app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="24dp" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            tools:text="Do not water your lawn and plants today. The rain does it for you and you save water."
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/recommendationColumn"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
