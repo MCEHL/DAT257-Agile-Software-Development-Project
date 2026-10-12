@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -108,6 +109,12 @@ public class MainActivity extends AppCompatActivity {
         runOnUiThread(() -> {
             textView2.setText(displayInput.displayRecommendation(RecommendationHandler.getInstance().getCurrentRecommendation().getText()));
             textView.setText(displayInput.displayWeather(rain));
+
+            //---Nytt för att testa bakgrundsändringar beroende på väder
+            ConstraintLayout mainLayout = findViewById(R.id.main);
+            mainLayout.setBackgroundResource(
+                    displayInput.displayBackground(weatherType)
+            );
 
             //---Nytt för att testa ikonanvändning beroende på väderprognos
             ImageView weatherIcon = findViewById(R.id.rainIcon);

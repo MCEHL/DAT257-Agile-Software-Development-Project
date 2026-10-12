@@ -15,6 +15,10 @@ public class WeatherAnalyzer {
         if (forecast.getWillRain()){
             return "rain";
         }
+        if (forecast.getAverageCloudiness() >= 50) {
+            return "cloudy";
+        }
+
         return "sun";
         /*try {
             double rain = weatherJson.getDouble("rain");

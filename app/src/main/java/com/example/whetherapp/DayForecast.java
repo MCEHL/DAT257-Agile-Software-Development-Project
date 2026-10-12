@@ -18,6 +18,7 @@ public class DayForecast {
     private boolean willRain;
     private double minAmountRain, maxAmountRain;
 
+    private double averageCloudiness;
 
     public DayForecast(LocalDate date, LocalDateTime forecastCreated, double stationLongitude, double stationLatitude, JSONArray todaysTimeseries) {
         this.date = date;
@@ -27,6 +28,7 @@ public class DayForecast {
         this.todaysTimeseries = todaysTimeseries;
 
         updateRain();
+        updateCloudiness();
 
     }
 
@@ -53,6 +55,35 @@ public class DayForecast {
         return date;
     }
 
+    public void updateCloudiness() {
+        double totalCloudiness = 0;
+        int count = 0;
+
+        try {
+            for (int i = 0; i < todaysTimeseries.length(); i++) {
+
+                JSONObject data =
+                        todaysTimeseries.getJSONObject(i)
+                                .getJSONObject("data");
+
+                if (data.has("cloud_area_fraction")) {
+                    totalCloudiness += data.getDouble("cloud_area_fraction");
+                    count++;
+                }
+            }
+
+            if (count > 0) {
+                averageCloudiness = totalCloudiness / count;
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public double getAverageCloudiness() {
+        return averageCloudiness;
+    }
     public boolean getWillRain() {
         return willRain;
     }

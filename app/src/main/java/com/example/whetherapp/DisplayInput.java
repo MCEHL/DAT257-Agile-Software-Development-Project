@@ -3,6 +3,7 @@ package com.example.whetherapp;
 
 import java.util.Locale;
 
+
 public class DisplayInput {
     // public String Weather = "SOL";
     // public String recomendation = "Today could be a good day to dry laundry outside!";
@@ -24,7 +25,22 @@ public class DisplayInput {
         if (weatherType.equals("sun")) {
             return R.drawable.baseline_wb_sunny_24;
         }
+        if (weatherType.equals("cloudy")) {
+            return R.drawable.baseline_cloud_24;
+        }
+        return 0;
+    }
 
+    public int displayBackground(String weatherType) {
+        if (weatherType.equals("rain")) {
+            return R.drawable.rainbackground;
+        }
+        if (weatherType.equals("sun")) {
+            return R.drawable.sunbackground;
+        }
+        if (weatherType.equals("cloudy")) {
+            return R.drawable.background_cloudy;
+        }
         return 0;
     }
 
