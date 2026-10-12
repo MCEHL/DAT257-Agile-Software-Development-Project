@@ -99,9 +99,12 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
             DayForecast today = week.get(0);
+            Log.d("WEATHERAPP", "Average cloudiness = " + today.getAverageCloudiness());
+            Log.d("WEATHERAPP", "Will rain = " + today.getWillRain());
 
             double rain = weatherAnalyzer.getRain(today);
             String weatherType = weatherAnalyzer.getWeatherType(today);
+            Log.d("WEATHERAPP", "Weather type = " + weatherType);
 
             RecommendationHandler recommendationHandler = RecommendationHandler.getInstance();
             recommendationHandler.compareToday(new ArrayList<>(recommendationHandler.getRecommendations()), today);

@@ -15,7 +15,7 @@ public class WeatherAnalyzer {
         if (forecast.getWillRain()){
             return "rain";
         }
-        if (forecast.getAverageCloudiness() >= 50) {
+        if (forecast.getAverageCloudiness() >= 0.5) {
             return "cloudy";
         }
 

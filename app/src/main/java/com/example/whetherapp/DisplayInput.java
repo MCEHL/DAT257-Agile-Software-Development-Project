@@ -39,7 +39,7 @@ public class DisplayInput {
             return R.drawable.sunbackground;
         }
         if (weatherType.equals("cloudy")) {
-            return R.drawable.background_cloudy;
+            return R.drawable.cloudbackground;
         }
         return 0;
     }
