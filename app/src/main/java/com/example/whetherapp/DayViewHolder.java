@@ -1,10 +1,12 @@
 package com.example.whetherapp;
 
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Locale;
 
 /**
@@ -18,6 +20,9 @@ public class DayViewHolder extends RecyclerView.ViewHolder {
 
     private final TextView dayName;
     private final TextView dayDate;
+    private final TextView weatherText;
+    private final ImageView weatherIcon;
+    private final TextView recommendationText;
 
     /**
      * @param itemView an inflated one_day.xml layout
@@ -26,15 +31,36 @@ public class DayViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         this.dayName = itemView.findViewById(R.id.dayName);
         this.dayDate = itemView.findViewById(R.id.dayDate);
+        this.weatherText = itemView.findViewById(R.id.weatherText);
+        this.weatherIcon = itemView.findViewById(R.id.weatherIcon);
+        this.recommendationText = itemView.findViewById(R.id.recommendationText);
     }
 
     /**
-     * Shows the name and date of the given day in the card.
+     * Shows the given day in the container
      *
      * @param date the day to display
+     * @param forecast the day's forecast, or null if it has not been fetched yet
+     * @param loading true while the forecast is being fetched
      */
-    public void bind(LocalDate date) {
+    public void bind(LocalDate date, DayForecast forecast, boolean loading) {
         dayName.setText(date.format(DAY_NAME_FORMAT));
         dayDate.setText(date.format(DAY_DATE_FORMAT));
+
+        if (forecast == null) {
+            weatherText.setText("");
+            weatherIcon.setImageDrawable(null);
+            recommendationText.setText(loading ? "Loading..." : "Tap to see recommendation");
+            return;
+        }
+
+        WeatherAnalyzer weatherAnalyzer = new WeatherAnalyzer();
+        DisplayInput displayInput = new DisplayInput();
+        RecommendationHandler recommendationHandler = RecommendationHandler.getInstance();
+        recommendationHandler.compareToday(new ArrayList<>(recommendationHandler.getRecommendations()), forecast);
+
+        weatherText.setText(displayInput.displayWeather(weatherAnalyzer.getRain(forecast)));
+        weatherIcon.setImageResource(displayInput.displayWeatherIcon(weatherAnalyzer.getWeatherType(forecast)));
+        recommendationText.setText(displayInput.displayRecommendation(recommendationHandler.getCurrentRecommendation().getText()));
     }
 }

@@ -1,13 +1,15 @@
 package com.example.whetherapp;
 //import org.json.JSONObject;
 
+import java.util.Locale;
+
 public class DisplayInput {
     // public String Weather = "SOL";
     // public String recomendation = "Today could be a good day to dry laundry outside!";
 
     public String displayWeather(double rain) {
-        if (rain > 0) {
-            return "Rain: " + rain + " mm";
+        if (rain >= 0.05) {
+            return String.format(Locale.US, "Rain: %.1f mm", rain);
         } else {
             return "No rain expected";
         }
