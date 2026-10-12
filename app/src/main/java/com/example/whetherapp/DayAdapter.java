@@ -6,7 +6,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Connects a list of days to the RecyclerView on the "Upcoming seven days" screen.
@@ -14,13 +18,27 @@ import java.util.List;
  * Each day is shown in a one_day.xml card through a {@link DayViewHolder}.
  */
 public class DayAdapter extends RecyclerView.Adapter<DayViewHolder> {
+
+    /**
+     * Tap day card -> call OnDayClickListener
+     */
+    public interface OnDayClickListener {
+        void onDayClicked(LocalDate date);
+    }
+
     private final List<LocalDate> days;
+    private final OnDayClickListener clickListener;
+    // Sparas per datum så att rätt data visas även när RecyclerView återanvänder korten.
+    private final Map<LocalDate, DayForecast> forecasts = new HashMap<>();
+    private final Set<LocalDate> loadingDays = new HashSet<>();
 
     /**
      * @param days the days to show, in the order they should appear
+     * @param clickListener told which day was tapped
      */
-    public DayAdapter(List<LocalDate> days) {
+    public DayAdapter(List<LocalDate> days, OnDayClickListener clickListener) {
         this.days = days;
+        this.clickListener = clickListener;
     }
 
     /**
@@ -42,7 +60,9 @@ public class DayAdapter extends RecyclerView.Adapter<DayViewHolder> {
      */
     @Override
     public void onBindViewHolder(@NonNull DayViewHolder holder, int position) {
-        holder.bind(days.get(position));
+        LocalDate date = days.get(position);
+        holder.bind(date, forecasts.get(date), loadingDays.contains(date));
+        holder.itemView.setOnClickListener(v -> clickListener.onDayClicked(date));
     }
 
     /**
@@ -51,5 +71,26 @@ public class DayAdapter extends RecyclerView.Adapter<DayViewHolder> {
     @Override
     public int getItemCount() {
         return days.size();
+    }
+
+    /**
+     * "loading" when pressed
+     */
+    public void setLoading(LocalDate date) {
+        loadingDays.add(date);
+        notifyItemChanged(days.indexOf(date));
+    }
+
+    /**
+     * Shows the weather and recommendation for the given day in its card.
+     *
+     * @param forecast the fetched forecast, or null if none could be fetched
+     */
+    public void setForecast(LocalDate date, DayForecast forecast) {
+        loadingDays.remove(date);
+        if (forecast != null) {
+            forecasts.put(date, forecast);
+        }
+        notifyItemChanged(days.indexOf(date));
     }
 }

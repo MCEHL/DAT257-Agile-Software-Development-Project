@@ -7,7 +7,10 @@
                                                    xmlns:tools="http://schemas.android.com/tools"
                                                    android:layout_width="match_parent"
                                                    android:layout_height="wrap_content"
-                                                   android:padding="16dp">
+                                                   android:padding="16dp"
+                                                   android:clickable="true"
+                                                   android:focusable="true"
+                                                   android:background="?attr/selectableItemBackground">
 
     <!-- Column lines: the weather starts at 25 % and the recommendation at 55 % of the width. -->
     <androidx.constraintlayout.widget.Guideline

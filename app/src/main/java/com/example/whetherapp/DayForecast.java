@@ -49,6 +49,10 @@ public class DayForecast {
         }
     }
 
+    public LocalDate getDate() {
+        return date;
+    }
+
     public boolean getWillRain() {
         return willRain;
     }
