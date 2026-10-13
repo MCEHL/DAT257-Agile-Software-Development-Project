@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
             );
 
             //---Nytt för att testa ikonanvändning beroende på väderprognos
-            ImageView weatherIcon = findViewById(R.id.rainIcon);
+            ImageView weatherIcon = findViewById(R.id.weatherIcon_Homepage);
             weatherIcon.setImageResource(displayInput.displayWeatherIcon(weatherType));
             });
         }).start();

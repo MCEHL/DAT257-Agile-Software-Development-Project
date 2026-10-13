@@ -27,7 +27,7 @@
     <!-- Rain symbol -->
 
     <ImageView
-            android:id="@+id/rainIcon"
+            android:id="@+id/weatherIcon_Homepage"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginTop="48dp"
