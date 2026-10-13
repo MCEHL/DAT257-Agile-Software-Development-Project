@@ -2,4 +2,10 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Background colors for the day cards on the upcoming seven days page.
+         Same as the start colors of the sun/rain/cloud backgrounds on the home screen. -->
+    <color name="weather_sun">#FFF8E1</color>
+    <color name="weather_rain">#B4C7D9</color>
+    <color name="weather_cloudy">#D1D5D8</color>
 </resources>

@@ -47,5 +47,24 @@ public class DisplayInput {
     public String displayRecommendation(String recommendation) {
         return recommendation;
     }
-}
 
+    /**
+     * Chooses the background color for a day card on the upcoming seven days page.
+     * "cloudy" is only returned by WeatherAnalyzer once cloudiness is supported.
+     *
+     * @param weatherType "sun", "rain" or "cloudy", as returned by WeatherAnalyzer.getWeatherType
+     * @return a color resource id, or 0 for no background if the weather type is unknown
+     */
+    public int displayDayBackgroundColor(String weatherType) {
+        switch (weatherType) {
+            case "rain":
+                return R.color.weather_rain;
+            case "sun":
+                return R.color.weather_sun;
+            case "cloudy":
+                return R.color.weather_cloudy;
+            default:
+                return 0;
+        }
+    }
+}

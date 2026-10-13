@@ -51,6 +51,7 @@ public class DayViewHolder extends RecyclerView.ViewHolder {
             weatherText.setText("");
             weatherIcon.setImageDrawable(null);
             recommendationText.setText(loading ? "Loading..." : "Tap to see recommendation");
+            itemView.setBackgroundResource(0); // Kortet kan vara återanvänt från en dag med färg.
             return;
         }
 
@@ -59,8 +60,12 @@ public class DayViewHolder extends RecyclerView.ViewHolder {
         RecommendationHandler recommendationHandler = RecommendationHandler.getInstance();
         recommendationHandler.compareToday(new ArrayList<>(recommendationHandler.getRecommendations()), forecast);
 
+        String weatherType = weatherAnalyzer.getWeatherType(forecast);
+
         weatherText.setText(displayInput.displayWeather(weatherAnalyzer.getRain(forecast)));
-        weatherIcon.setImageResource(displayInput.displayWeatherIcon(weatherAnalyzer.getWeatherType(forecast)));
+        weatherIcon.setImageResource(displayInput.displayWeatherIcon(weatherType));
         recommendationText.setText(displayInput.displayRecommendation(recommendationHandler.getCurrentRecommendation().getText()));
+
+        itemView.setBackgroundResource(displayInput.displayDayBackgroundColor(weatherType));
     }
 }
