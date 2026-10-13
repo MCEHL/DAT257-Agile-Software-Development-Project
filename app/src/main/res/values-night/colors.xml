@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dark mode versions of the day card background colors in values/colors.xml.
+         Android picks these automatically in dark mode. The names must match the ones there.
+         Darker shades are used so that the light text in dark mode stays readable. -->
+    <color name="weather_sun">#4A3F1C</color>
+    <color name="weather_rain">#2F4558</color>
+    <color name="weather_cloudy">#42474B</color>
+</resources>
