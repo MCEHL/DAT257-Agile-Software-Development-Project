@@ -67,10 +67,8 @@ public class ForecastBuilder {
             String day = it.next(); //for each day-key in byDay set:
             JSONArray entries = byDay.getJSONArray(day);    //get array of timeseries
             forecasts.add(new DayForecast(LocalDate.parse(day), createdDate, longitude, latitude, entries)); // create new forecastobject and add to array
-
         }
         return forecasts;
     }
-
 
 }

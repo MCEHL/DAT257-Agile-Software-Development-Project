@@ -1,0 +1,33 @@
+package com.example.whetherapp;
+
+// Index corresponds to symbol_code (1-27) from smhi api, updated: 20261012
+public enum WeatherTypes {
+    no_type,
+    clear_sky,
+    nearly_clear_sky,
+    variable_cloudiness,
+    halfclear_sky,
+    cloudy_sky,
+    overcast,
+    fog,
+    light_rain_showers,
+    moderate_rain_showers,
+    heavy_rain_showers,
+    thunderstorm,
+    light_sleet_showers,
+    moderate_sleet_showers,
+    heavy_sleet_showers,
+    light_snow_showers,
+    moderate_snow_showers,
+    heavy_snow_showers,
+    light_rain,
+    moderate_rain,
+    heavy_rain,
+    thunder,
+    light_sleet,
+    moderate_sleet,
+    heavy_sleet,
+    light_snowfall,
+    moderate_snowfall,
+    heavy_snowfall,
+}

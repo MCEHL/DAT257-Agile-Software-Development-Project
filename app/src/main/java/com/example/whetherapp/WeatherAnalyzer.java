@@ -1,5 +1,4 @@
 package com.example.whetherapp;
-import org.json.JSONObject;
 
 public class WeatherAnalyzer {
     public double getRain(DayForecast forecast) {
@@ -12,28 +11,12 @@ public class WeatherAnalyzer {
     }
     public String getWeatherType(DayForecast forecast) {
 
-        if (forecast.getWillRain()){
+        if (forecast.getRainy()){
             return "rain";
         }
-        if (forecast.getAverageCloudiness() >= 0.5) {
+        if (forecast.getCloudy()) {
             return "cloudy";
         }
-
         return "sun";
-        /*try {
-            double rain = weatherJson.getDouble("rain");
-            boolean sunny = weatherJson.getBoolean("sunny");
-
-            if (rain > 0) {
-                return "rain";
-            }
-            if (sunny){
-                return "sun";
-            }
-
-            return "unknown";
-        } catch (Exception e) {
-            return "unknown";
-        }*/
     }
 }
