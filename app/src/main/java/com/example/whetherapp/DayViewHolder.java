@@ -51,6 +51,7 @@ public class DayViewHolder extends RecyclerView.ViewHolder {
             weatherText.setText("");
             weatherIcon.setImageDrawable(null);
             recommendationText.setText(loading ? "Loading..." : "Tap to see recommendation");
+            itemView.setBackgroundResource(0); // Kortet kan vara återanvänt från en dag med färg.
             return;
         }
 
