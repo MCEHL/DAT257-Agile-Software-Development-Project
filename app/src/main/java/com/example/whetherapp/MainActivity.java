@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
             }
             DayForecast today = week.get(0);
             Log.d("WEATHERAPP", "Average cloudiness = " + today.getAverageCloudiness());
-            Log.d("WEATHERAPP", "Will rain = " + today.getWillRain());
+            Log.d("WEATHERAPP", "Will rain = " + today.getRainy());
 
             double rain = weatherAnalyzer.getRain(today);
             String weatherType = weatherAnalyzer.getWeatherType(today);

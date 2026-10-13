@@ -18,7 +18,6 @@ public class DayForecast {
     //if there will be rain at any point today, rainy is true, same logic holds for sun and clouds
     private boolean rainy, sunny, cloudy;
     private double minAmountRain, maxAmountRain;
-
     private double averageCloudiness;
 
     public DayForecast(LocalDate date, LocalDateTime forecastCreated, double stationLongitude, double stationLatitude, JSONArray todaysTimeseries) {
@@ -31,17 +30,14 @@ public class DayForecast {
         updateRain();
         updateClouds();
         updateSun();
-        updateCloudiness();
 
     }
 
     public void updateRain() {
-        JSONArray timeseries = this.todaysTimeseries;
-
         try {
-            for (int i = 0; i < timeseries.length(); i++) {
+            for (int i = 0; i < this.todaysTimeseries.length(); i++) {
                 // get amount of rain
-                JSONObject data = timeseries.getJSONObject(i).getJSONObject("data");
+                JSONObject data = this.todaysTimeseries.getJSONObject(i).getJSONObject("data");
 
                 this.maxAmountRain += data.getDouble("precipitation_amount_max");
                 this.minAmountRain += data.getDouble("precipitation_amount_min");
@@ -55,13 +51,12 @@ public class DayForecast {
     }
 
     public void updateSun(){
-        JSONArray timeseries = this.todaysTimeseries;
         ArrayList<Integer> types = new ArrayList<>();
 
         try {
-            for (int i = 0; i < timeseries.length(); i++) {
+            for (int i = 0; i < this.todaysTimeseries.length(); i++) {
 
-                JSONObject data = timeseries.getJSONObject(i).getJSONObject("data");
+                JSONObject data = this.todaysTimeseries.getJSONObject(i).getJSONObject("data");
 
                 types.add(data.getInt("symbol_code"));
             }
@@ -76,14 +71,23 @@ public class DayForecast {
     }
 
     public void updateClouds(){
-        JSONArray timeseries = this.todaysTimeseries;
-        ArrayList<Integer> types = new ArrayList<>();
-        try {
-            for (int i = 0; i < timeseries.length(); i++) {
+        double totalCloudiness = 0;
+        int count = 0;
 
-                JSONObject data = timeseries.getJSONObject(i).getJSONObject("data");
+        ArrayList<Integer> types = new ArrayList<>();
+
+        try {
+            for (int i = 0; i < this.todaysTimeseries.length(); i++) {
+
+                JSONObject data = this.todaysTimeseries.getJSONObject(i).getJSONObject("data");
 
                 types.add(data.getInt("symbol_code"));
+
+                if (data.has("cloud_area_fraction")) {
+                    totalCloudiness += data.getDouble("cloud_area_fraction");
+                    count++;
+                }
+
             }
 
         } catch (JSONException e) {
@@ -91,42 +95,19 @@ public class DayForecast {
         }
 
         // check if weather is clear or nearly clear, if yes set sunny to true
-        this.setSunny((types.contains(WeatherTypes.valueOf("variable_cloudiness").ordinal())) ||
+        this.setCloudy((types.contains(WeatherTypes.valueOf("variable_cloudiness").ordinal())) ||
                 types.contains(WeatherTypes.valueOf("halfclear_sky").ordinal()) ||
                 (types.contains(WeatherTypes.valueOf("cloudy_sky").ordinal())) ||
                 types.contains(WeatherTypes.valueOf("overcast").ordinal()));
+
+        if (count > 0) {
+            averageCloudiness = totalCloudiness / count;
+        }
     }
 
     public LocalDate getDate() {
         return date;
     }
-
-    public void updateCloudiness() {
-        double totalCloudiness = 0;
-        int count = 0;
-
-        try {
-            for (int i = 0; i < todaysTimeseries.length(); i++) {
-
-                JSONObject data =
-                        todaysTimeseries.getJSONObject(i)
-                                .getJSONObject("data");
-
-                if (data.has("cloud_area_fraction")) {
-                    totalCloudiness += data.getDouble("cloud_area_fraction");
-                    count++;
-                }
-            }
-
-            if (count > 0) {
-                averageCloudiness = totalCloudiness / count;
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
     public double getAverageCloudiness() {
         return averageCloudiness;
     }
