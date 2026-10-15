@@ -2,6 +2,7 @@ package com.example.whetherapp;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -32,6 +33,8 @@ public class UpcomingSevenDays extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState); // Låter AppCompatActivity sätta upp fönster och tema.
         setContentView(R.layout.activity_upcoming_seven_days); // Skapar och visar vyerna från XML-filen.
+        Button backButton = findViewById(R.id.button2);
+        backButton.setOnClickListener(v ->{finish();});// stänger sevendays och komer tillbacks till mainactivity.
         RecyclerView dayList = findViewById(R.id.dayList);
         // Lägger korten under varandra. Utan LayoutManager visas ingenting.
         dayList.setLayoutManager(new LinearLayoutManager(this));
