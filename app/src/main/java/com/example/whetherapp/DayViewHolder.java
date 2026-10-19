@@ -15,7 +15,9 @@ import java.util.Locale;
  * for different days when the list is scrolled.
  */
 public class DayViewHolder extends RecyclerView.ViewHolder {
+    /** Formats a date as a full weekday name, e.g. "Monday". */
     private static final DateTimeFormatter DAY_NAME_FORMAT = DateTimeFormatter.ofPattern("EEEE", Locale.ENGLISH);
+    /** Formats a date as day and abbreviated month, e.g. "5 Oct". */
     private static final DateTimeFormatter DAY_DATE_FORMAT = DateTimeFormatter.ofPattern("d MMM", Locale.ENGLISH);
 
     private final TextView dayName;
@@ -37,11 +39,11 @@ public class DayViewHolder extends RecyclerView.ViewHolder {
     }
 
     /**
-     * Shows the given day in the container
+     * Fills the card with data for the given day.
      *
-     * @param date the day to display
+     * @param date     the day to display
      * @param forecast the day's forecast, or null if it has not been fetched yet
-     * @param loading true while the forecast is being fetched
+     * @param loading  true while the forecast is being fetched
      */
     public void bind(LocalDate date, DayForecast forecast, boolean loading) {
         dayName.setText(date.format(DAY_NAME_FORMAT));
@@ -51,7 +53,7 @@ public class DayViewHolder extends RecyclerView.ViewHolder {
             weatherText.setText("");
             weatherIcon.setImageDrawable(null);
             recommendationText.setText(loading ? "Loading..." : "Tap to see recommendation");
-            itemView.setBackgroundResource(0); // Kortet kan vara återanvänt från en dag med färg.
+            itemView.setBackgroundResource(0); // Reset background in case the card was reused from a day that had a color.
             return;
         }
 
