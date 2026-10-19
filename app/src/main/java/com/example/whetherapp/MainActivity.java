@@ -105,13 +105,11 @@ import static com.example.whetherapp.ForecastQueryParameters.*;
                     return;
                 }
 
-
-                TextView textView2 = findViewById(R.id.textView3);
                 DisplayInput displayInput = new DisplayInput();
 
-
                 TextView textView = findViewById(R.id.textView2);
-                DisplayInput displayInput2 = new DisplayInput();
+                TextView textView2 = findViewById(R.id.textView3);
+
                 WeatherAnalyzer weatherAnalyzer = new WeatherAnalyzer();
 
                 if (week.isEmpty()) {
@@ -129,7 +127,7 @@ import static com.example.whetherapp.ForecastQueryParameters.*;
                 recommendationHandler.compareToday(new ArrayList<>(recommendationHandler.getRecommendations()), today);
 
                 runOnUiThread(() -> {
-                    textView2.setText(displayInput.displayRecommendation(RecommendationHandler.getInstance().getCurrentRecommendation().getText()));
+                    textView2.setText(RecommendationHandler.getInstance().getCurrentRecommendation().getText());
                     textView.setText(displayInput.displayWeather(rain));
 
                     ConstraintLayout mainLayout = findViewById(R.id.main);

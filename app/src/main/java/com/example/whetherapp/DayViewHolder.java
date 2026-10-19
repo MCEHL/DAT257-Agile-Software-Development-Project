@@ -66,7 +66,7 @@ public class DayViewHolder extends RecyclerView.ViewHolder {
 
         weatherText.setText(displayInput.displayWeather(weatherAnalyzer.getRain(forecast)));
         weatherIcon.setImageResource(displayInput.displayWeatherIcon(weatherType));
-        recommendationText.setText(displayInput.displayRecommendation(recommendationHandler.getCurrentRecommendation().getText()));
+        recommendationText.setText(recommendationHandler.getCurrentRecommendation().getText());
 
         itemView.setBackgroundResource(displayInput.displayDayBackgroundColor(weatherType));
     }

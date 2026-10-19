@@ -60,16 +60,6 @@ public class DisplayInput {
     }
 
     /**
-     * Returns the recommendation text as-is for display.
-     *
-     * @param recommendation the recommendation text to display
-     * @return the same string unchanged
-     */
-    public String displayRecommendation(String recommendation) {
-        return recommendation;
-    }
-
-    /**
      * Chooses the background color for a day card on the upcoming seven days page.
      *
      * @param weatherType "sun", "rain", or "cloudy", as returned by {@link WeatherAnalyzer#getWeatherType}
