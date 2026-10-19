@@ -7,10 +7,21 @@ import java.util.Locale;
  */
 public class UIElementPicker {
 
+    /**
+     * Initializes the ui element picker.
+     * <p>The constructor is private to prevent other classes
+     * from creating additional instances.</p>
+     */
     private static UIElementPicker instance;
 
     private UIElementPicker(){}
-
+    /**
+     * Returns the shared instance of the ui element picker.
+     *
+     * <p>Creates the instance if it does not already exist.</p>
+     *
+     * @return the shared UIElementPicker instance
+     */
     public static UIElementPicker getInstance() {
         if(instance == null) instance = new UIElementPicker();
         return instance;
