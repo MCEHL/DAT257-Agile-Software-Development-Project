@@ -20,15 +20,20 @@ import java.util.Set;
 public class DayAdapter extends RecyclerView.Adapter<DayViewHolder> {
 
     /**
-     * Tap day card -> call OnDayClickListener
+     * Listener for tap events on day cards.
      */
     public interface OnDayClickListener {
+        /**
+         * Called when the user taps a day card.
+         *
+         * @param date the date of the tapped card
+         */
         void onDayClicked(LocalDate date);
     }
 
     private final List<LocalDate> days;
     private final OnDayClickListener clickListener;
-    // Sparas per datum så att rätt data visas även när RecyclerView återanvänder korten.
+    /** Cached forecasts per date, so that the correct data is shown even when the RecyclerView reuses cards. */
     private final Map<LocalDate, DayForecast> forecasts = new HashMap<>();
     private final Set<LocalDate> loadingDays = new HashSet<>();
 
@@ -48,9 +53,8 @@ public class DayAdapter extends RecyclerView.Adapter<DayViewHolder> {
     @NonNull
     @Override
     public DayViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // false: RecyclerView lägger själv till kortet i listan när det ska visas.
+        // false: RecyclerView adds the card to the list itself when it is about to be shown.
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.one_day, parent, false);
-
         return new DayViewHolder(itemView);
     }
 
@@ -74,7 +78,10 @@ public class DayAdapter extends RecyclerView.Adapter<DayViewHolder> {
     }
 
     /**
-     * "loading" when pressed
+     * Marks the given day as loading and refreshes its card.
+     * A loading indicator is shown until {@link #setForecast} is called for the same date.
+     *
+     * @param date the date whose card should show a loading state
      */
     public void setLoading(LocalDate date) {
         loadingDays.add(date);
@@ -84,6 +91,7 @@ public class DayAdapter extends RecyclerView.Adapter<DayViewHolder> {
     /**
      * Shows the weather and recommendation for the given day in its card.
      *
+     * @param date the date whose card should be updated
      * @param forecast the fetched forecast, or null if none could be fetched
      */
     public void setForecast(LocalDate date, DayForecast forecast) {

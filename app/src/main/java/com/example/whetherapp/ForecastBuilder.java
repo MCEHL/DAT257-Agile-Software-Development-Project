@@ -2,7 +2,6 @@ package com.example.whetherapp;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -11,64 +10,62 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * Parses a raw SMHI forecast JSON response into a list of {@link DayForecast} objects,
+ * one per calendar day covered by the response.
+ */
 public class ForecastBuilder {
 
-    public ArrayList<DayForecast> createForecasts (JSONObject root) throws org.json.JSONException {
+    /**
+     * Parses the root JSON object from the SMHI API and creates one {@link DayForecast}
+     * per calendar day found in the timeseries.
+     *
+     * @param root the root JSON object returned by the SMHI forecast API
+     * @return a list of daily forecasts in the order they appear in the response
+     * @throws org.json.JSONException if a required field is missing or has an unexpected type
+     */
+    public ArrayList<DayForecast> createForecasts(JSONObject root) throws org.json.JSONException {
 
         ArrayList<DayForecast> forecasts = new ArrayList<>();
 
-        // ---- Created date, long and lat is same for all days and therefore all forecasts ----
+        // ---- createdTime and coordinates are the same for all days ----
 
-        // Getting the created date
-        String createdKey = "createdTime";
-        String createdValue = root.getString(createdKey);  //get value
+        String createdValue = root.getString("createdTime");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
-        LocalDateTime createdDate = LocalDateTime.parse(createdValue, formatter);       //format to correct type
+        LocalDateTime createdDate = LocalDateTime.parse(createdValue, formatter);
 
-
-        // Getting station longitude and latitude
-        JSONObject geometry = root.getJSONObject("geometry");
-        JSONArray coordsValue = geometry.getJSONArray("coordinates");
-
+        JSONArray coordsValue = root.getJSONObject("geometry").getJSONArray("coordinates");
         double longitude = coordsValue.getDouble(0);
         double latitude = coordsValue.getDouble(1);
 
-
-        // ---- Data for all days are lumped together, first split them into separate days ----
+        // ---- All timeseries entries are lumped together; split them into separate days ----
 
         JSONArray series = root.getJSONArray("timeSeries");
-        JSONObject byDay = new JSONObject();   // "2026-09-29" -> JSONArray of entries
+        JSONObject byDay = new JSONObject(); // "2026-09-29" -> JSONArray of entries
 
-        // For every entry in time series:
         for (int i = 0; i < series.length(); i++) {
-            JSONObject entry = series.getJSONObject(i); //Get entry
+            JSONObject entry = series.getJSONObject(i);
 
-            // Convert to local time
+            // Convert UTC intervalParametersStartTime to local Stockholm date
             String day = Instant.parse(entry.getString("intervalParametersStartTime"))
                     .atZone(ZoneId.of("Europe/Stockholm"))
                     .toLocalDate()
-                    .toString();   // "2026-09-29"
+                    .toString(); // "2026-09-29"
 
-            if (!byDay.has(day)) { // check if list has this key
-                byDay.put(day, new JSONArray()); // if not add key and corresponding array for data storage
+            if (!byDay.has(day)) {
+                byDay.put(day, new JSONArray());
             }
-            byDay.getJSONArray(day).put(entry); // add data to correct date
+            byDay.getJSONArray(day).put(entry);
         }
 
-    /* Debugging
-        for (String day : byDay.keySet()) {
-            JSONArray entries = byDay.getJSONArray(day);
-            System.out.println(day + ": " + entries);//.toString(4));
-        }
-    */
+        // ---- Create one DayForecast per day ----
 
-        // ---- Now everything is split into separate days, but still in jsonobjects ---
         for (Iterator<String> it = byDay.keys(); it.hasNext(); ) {
-            String day = it.next(); //for each day-key in byDay set:
-            JSONArray entries = byDay.getJSONArray(day);    //get array of timeseries
-            forecasts.add(new DayForecast(LocalDate.parse(day), createdDate, longitude, latitude, entries)); // create new forecastobject and add to array
+            String day = it.next();
+            JSONArray entries = byDay.getJSONArray(day);
+            forecasts.add(new DayForecast(LocalDate.parse(day), createdDate, longitude, latitude, entries));
         }
+
         return forecasts;
     }
-
 }

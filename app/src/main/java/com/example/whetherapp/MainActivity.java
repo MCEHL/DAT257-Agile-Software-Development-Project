@@ -20,7 +20,32 @@ import static com.example.whetherapp.ForecastQueryParameters.*;
 
 
 public class MainActivity extends AppCompatActivity {
+    /**
+     * Main activity of the weather application.
+     *
+     * <p>Displays the current day's weather forecast and a recommendation
+     * based on weather data retrieved from the SMHI API.</p>
+     *
+     * <p>The activity also updates the weather icon and background
+     * according to the forecast and provides navigation to the
+     * upcoming seven-day forecast.</p>
+     */
 
+    public class MainActivity extends AppCompatActivity {
+
+    /**
+     * Initializes the main activity and its user interface.
+     *
+     * Retrieves weather data from the SMHI API on a background thread,
+     * processes the forecast, analyzes today's weather conditions,
+     * and determines an appropriate recommendation.
+     *
+     * Updates the displayed weather information, recommendation,
+     * background, and weather icon on the main UI thread.
+     *
+     * @param savedInstanceState the previously saved activity state,
+     *                           or null if no saved state exists
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,8 +59,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-
-        //---API anrop
         new Thread(() -> {
             APICommunication request = new APICommunication();
             String response;
@@ -83,7 +106,6 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
-            //--------
 
             TextView textView2 = findViewById(R.id.textView3);
             DisplayInput displayInput = new DisplayInput();
@@ -91,11 +113,9 @@ public class MainActivity extends AppCompatActivity {
 
             TextView textView = findViewById(R.id.textView2);
             DisplayInput displayInput2 = new DisplayInput();
-            //textView.setText(displayInput2.Weather);// ändrar så klassen DisplayInput används.
+            WeatherAnalyzer weatherAnalyzer = new WeatherAnalyzer();
 
-            WeatherAnalyzer weatherAnalyzer = new WeatherAnalyzer();//Två rader tillagda så weatherAnalyzer används
-
-            if (week.isEmpty()) { //Spärr om ingen vecka inlagd
+            if (week.isEmpty()) {
                 return;
             }
             DayForecast today = week.get(0);
@@ -113,13 +133,11 @@ public class MainActivity extends AppCompatActivity {
             textView2.setText(displayInput.displayRecommendation(RecommendationHandler.getInstance().getCurrentRecommendation().getText()));
             textView.setText(displayInput.displayWeather(rain));
 
-            //---Nytt för att testa bakgrundsändringar beroende på väder
             ConstraintLayout mainLayout = findViewById(R.id.main);
             mainLayout.setBackgroundResource(
                     displayInput.displayBackground(weatherType)
             );
 
-            //---Nytt för att testa ikonanvändning beroende på väderprognos
             ImageView weatherIcon = findViewById(R.id.weatherIcon_Homepage);
             weatherIcon.setImageResource(displayInput.displayWeatherIcon(weatherType));
             });
