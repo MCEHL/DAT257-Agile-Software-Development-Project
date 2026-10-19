@@ -17,9 +17,14 @@ import java.util.List;
 import static com.example.whetherapp.ForecastQueryParameters.*;
 
 /**
- * Screen listing the upcoming seven days, starting tomorrow.
- * Tapping a day fetches its forecast and shows the weather and a recommendation in the card.
- * Opened from the "Upcoming seven days" button on the home screen.
+ * Activity that displays weather forecasts for the upcoming seven days.
+ *
+ * <p>Displays a list of dates starting from tomorrow.
+ * When a user selects a date, the corresponding forecast is retrieved
+ * from the SMHI API and displayed in the selected day's card.</p>
+ *
+ * <p>The activity is accessed from the application's home screen
+ * and provides navigation back to the previous screen.</p>
  */
 public class UpcomingSevenDays extends AppCompatActivity {
     private static final int DAYS_TO_SHOW = 7;
@@ -27,26 +32,37 @@ public class UpcomingSevenDays extends AppCompatActivity {
     private DayAdapter adapter;
 
     /**
-     * Called by Android when the screen is opened. Shows the layout and fills the list with one card per day.
+     * Initializes the upcoming seven-day forecast screen.
+     *
+     * <p>Sets up the layout, back button, and RecyclerView containing
+     * the upcoming dates. Configures the adapter to retrieve weather
+     * information when a date is selected.</p>
+     *
+     * @param savedInstanceState the previously saved activity state,
+     *                           or null if no saved state exists
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState); // Låter AppCompatActivity sätta upp fönster och tema.
-        setContentView(R.layout.activity_upcoming_seven_days); // Skapar och visar vyerna från XML-filen.
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_upcoming_seven_days);
         Button backButton = findViewById(R.id.button2);
-        backButton.setOnClickListener(v ->{finish();});// stänger sevendays och komer tillbacks till mainactivity.
+        backButton.setOnClickListener(v ->{finish();});
         RecyclerView dayList = findViewById(R.id.dayList);
-        // Lägger korten under varandra. Utan LayoutManager visas ingenting.
+
         dayList.setLayoutManager(new LinearLayoutManager(this));
         dayList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         adapter = new DayAdapter(createUpcomingDays(), this::fetchForecastFor);
-        dayList.setAdapter(adapter); // Kopplar dagarna till listan via adaptern.
+        dayList.setAdapter(adapter);
     }
 
     /**
-     * Creates the days to show, starting tomorrow since today is shown on the home screen.
+     * Creates a list of dates for the upcoming seven days.
      *
-     * @return the upcoming {@value #DAYS_TO_SHOW} days in order
+     * <p>Starts from tomorrow because today's forecast is displayed
+     * on the application's home screen.</p>
+     *
+     * @return a list containing {@value #DAYS_TO_SHOW} consecutive
+     *         dates, starting from tomorrow
      */
     private List<LocalDate> createUpcomingDays() {
         List<LocalDate> days = new ArrayList<>();
@@ -56,16 +72,21 @@ public class UpcomingSevenDays extends AppCompatActivity {
         }
         return days;
     }
-
     /**
-     * Fetches the forecast from the API on a background thread and shows the given day's forecast in its card.
+     * Retrieves and displays the weather forecast for a selected date.
      *
-     * @param date the day that was tapped
+     * <p>Fetches forecast data from the SMHI API on a background thread
+     * and searches the returned forecasts for the requested date.
+     * Updates the corresponding card on the main UI thread.</p>
+     *
+     * <p>If the forecast cannot be retrieved or the requested date
+     * is unavailable, a notification is displayed to the user.</p>
+     *
+     * @param date the date for which the forecast should be retrieved
      */
     private void fetchForecastFor(LocalDate date) {
         adapter.setLoading(date);
 
-        // Nätverksanrop får inte göras på UI-tråden.
         new Thread(() -> {
             DayForecast forecast = null;
             try {
