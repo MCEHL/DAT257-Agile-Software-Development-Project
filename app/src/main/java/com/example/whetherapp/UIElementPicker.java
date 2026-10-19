@@ -7,6 +7,15 @@ import java.util.Locale;
  */
 public class UIElementPicker {
 
+    private static UIElementPicker instance;
+
+    private UIElementPicker(){}
+
+    public static UIElementPicker getInstance() {
+        if(instance == null) instance = new UIElementPicker();
+        return instance;
+    }
+
     /**
      * Formats the rain amount as a human-readable string.
      *

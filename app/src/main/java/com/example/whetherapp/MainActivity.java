@@ -105,7 +105,7 @@ import static com.example.whetherapp.ForecastQueryParameters.*;
                     return;
                 }
 
-                UIElementPicker uiElementPicker = new UIElementPicker();
+                UIElementPicker uiElementPicker = UIElementPicker.getInstance();
 
                 TextView textView = findViewById(R.id.textView2);
                 TextView textView2 = findViewById(R.id.textView3);

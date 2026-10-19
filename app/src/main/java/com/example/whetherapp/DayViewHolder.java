@@ -58,7 +58,7 @@ public class DayViewHolder extends RecyclerView.ViewHolder {
         }
 
         WeatherAnalyzer weatherAnalyzer = new WeatherAnalyzer();
-        UIElementPicker uiElementPicker = new UIElementPicker();
+        UIElementPicker uiElementPicker = UIElementPicker.getInstance();
         RecommendationHandler recommendationHandler = RecommendationHandler.getInstance();
         recommendationHandler.compareToday(new ArrayList<>(recommendationHandler.getRecommendations()), forecast);
 
