@@ -58,16 +58,16 @@ public class DayViewHolder extends RecyclerView.ViewHolder {
         }
 
         WeatherAnalyzer weatherAnalyzer = new WeatherAnalyzer();
-        DisplayInput displayInput = new DisplayInput();
+        UIElementPicker uiElementPicker = new UIElementPicker();
         RecommendationHandler recommendationHandler = RecommendationHandler.getInstance();
         recommendationHandler.compareToday(new ArrayList<>(recommendationHandler.getRecommendations()), forecast);
 
         String weatherType = weatherAnalyzer.getWeatherType(forecast);
 
-        weatherText.setText(displayInput.displayWeather(weatherAnalyzer.getRain(forecast)));
-        weatherIcon.setImageResource(displayInput.displayWeatherIcon(weatherType));
+        weatherText.setText(uiElementPicker.formatWeather(weatherAnalyzer.getRain(forecast)));
+        weatherIcon.setImageResource(uiElementPicker.pickWeatherIcon(weatherType));
         recommendationText.setText(recommendationHandler.getCurrentRecommendation().getText());
 
-        itemView.setBackgroundResource(displayInput.displayDayBackgroundColor(weatherType));
+        itemView.setBackgroundResource(uiElementPicker.pickDayBackgroundColor(weatherType));
     }
 }

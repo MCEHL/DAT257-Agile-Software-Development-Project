@@ -5,7 +5,7 @@ import java.util.Locale;
 /**
  * Translates weather data into displayable text, icons, and backgrounds.
  */
-public class DisplayInput {
+public class UIElementPicker {
 
     /**
      * Formats the rain amount as a human-readable string.
@@ -13,7 +13,7 @@ public class DisplayInput {
      * @param rain precipitation amount in mm
      * @return a formatted rain string, or "No rain expected" if below the threshold
      */
-    public String displayWeather(double rain) {
+    public String formatWeather(double rain) {
         if (rain >= 0.05) {
             return String.format(Locale.US, "Rain: %.1f mm", rain);
         } else {
@@ -27,7 +27,7 @@ public class DisplayInput {
      * @param weatherType "sun", "rain", or "cloudy", as returned by {@link WeatherAnalyzer#getWeatherType}
      * @return a drawable resource id, or 0 if the weather type is unknown
      */
-    public int displayWeatherIcon(String weatherType) {
+    public int pickWeatherIcon(String weatherType) {
         if (weatherType.equals("rain")) {
             return R.drawable.baseline_water_drop_24;
         }
@@ -46,7 +46,7 @@ public class DisplayInput {
      * @param weatherType "sun", "rain", or "cloudy", as returned by {@link WeatherAnalyzer#getWeatherType}
      * @return a drawable resource id, or 0 if the weather type is unknown
      */
-    public int displayBackground(String weatherType) {
+    public int pickBackground(String weatherType) {
         if (weatherType.equals("rain")) {
             return R.drawable.rainbackground;
         }
@@ -65,7 +65,7 @@ public class DisplayInput {
      * @param weatherType "sun", "rain", or "cloudy", as returned by {@link WeatherAnalyzer#getWeatherType}
      * @return a color resource id, or 0 for no background if the weather type is unknown
      */
-    public int displayDayBackgroundColor(String weatherType) {
+    public int pickDayBackgroundColor(String weatherType) {
         switch (weatherType) {
             case "rain":
                 return R.color.weather_rain;

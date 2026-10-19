@@ -105,7 +105,7 @@ import static com.example.whetherapp.ForecastQueryParameters.*;
                     return;
                 }
 
-                DisplayInput displayInput = new DisplayInput();
+                UIElementPicker uiElementPicker = new UIElementPicker();
 
                 TextView textView = findViewById(R.id.textView2);
                 TextView textView2 = findViewById(R.id.textView3);
@@ -128,15 +128,15 @@ import static com.example.whetherapp.ForecastQueryParameters.*;
 
                 runOnUiThread(() -> {
                     textView2.setText(RecommendationHandler.getInstance().getCurrentRecommendation().getText());
-                    textView.setText(displayInput.displayWeather(rain));
+                    textView.setText(uiElementPicker.formatWeather(rain));
 
                     ConstraintLayout mainLayout = findViewById(R.id.main);
                     mainLayout.setBackgroundResource(
-                            displayInput.displayBackground(weatherType)
+                            uiElementPicker.pickBackground(weatherType)
                     );
 
                     ImageView weatherIcon = findViewById(R.id.weatherIcon_Homepage);
-                    weatherIcon.setImageResource(displayInput.displayWeatherIcon(weatherType));
+                    weatherIcon.setImageResource(uiElementPicker.pickWeatherIcon(weatherType));
                 });
             }).start();
 
