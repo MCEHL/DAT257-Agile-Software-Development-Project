@@ -1,6 +1,14 @@
 package com.example.whetherapp;
-
-// Index corresponds to symbol_code (1-27) from smhi api, updated: 20261012
+/**
+ * Represents the different weather conditions provided by the SMHI API.
+ *
+ * <p>Each enum constant corresponds to a weather symbol code
+ * (symbol_code) from the SMHI weather forecast API.
+ * The ordinal position of each constant matches its corresponding
+ * symbol code, ranging from 1 to 27, with no_type at index 0.</p>
+ *
+ * <p>Last updated: 2026-10-12.</p>
+ */
 public enum WeatherTypes {
     no_type,
     clear_sky,
