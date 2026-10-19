@@ -20,7 +20,32 @@ import static com.example.whetherapp.ForecastQueryParameters.*;
 
 
 public class MainActivity extends AppCompatActivity {
+    /**
+     * Main activity of the weather application.
+     *
+     * <p>Displays the current day's weather forecast and a recommendation
+     * based on weather data retrieved from the SMHI API.</p>
+     *
+     * <p>The activity also updates the weather icon and background
+     * according to the forecast and provides navigation to the
+     * upcoming seven-day forecast.</p>
+     */
 
+    public class MainActivity extends AppCompatActivity {
+
+    /**
+     * Initializes the main activity and its user interface.
+     *
+     * Retrieves weather data from the SMHI API on a background thread,
+     * processes the forecast, analyzes today's weather conditions,
+     * and determines an appropriate recommendation.
+     *
+     * Updates the displayed weather information, recommendation,
+     * background, and weather icon on the main UI thread.
+     *
+     * @param savedInstanceState the previously saved activity state,
+     *                           or null if no saved state exists
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
