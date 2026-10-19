@@ -52,7 +52,7 @@ public class DayViewHolder extends RecyclerView.ViewHolder {
         if (forecast == null) {
             weatherText.setText("");
             weatherIcon.setImageDrawable(null);
-            recommendationText.setText(loading ? "Loading..." : "Tap to see recommendation");
+            recommendationText.setText(loading ? "Loading..." : "No forecast available. Tap to retry");
             itemView.setBackgroundResource(0); // Reset background in case the card was reused from a day that had a color.
             return;
         }
