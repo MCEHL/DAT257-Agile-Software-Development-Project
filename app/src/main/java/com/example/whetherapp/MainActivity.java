@@ -59,8 +59,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-
-        //---API anrop
         new Thread(() -> {
             APICommunication request = new APICommunication();
             String response;
@@ -108,7 +106,6 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
-            //--------
 
             TextView textView2 = findViewById(R.id.textView3);
             DisplayInput displayInput = new DisplayInput();
@@ -116,11 +113,9 @@ public class MainActivity extends AppCompatActivity {
 
             TextView textView = findViewById(R.id.textView2);
             DisplayInput displayInput2 = new DisplayInput();
-            //textView.setText(displayInput2.Weather);// ändrar så klassen DisplayInput används.
+            WeatherAnalyzer weatherAnalyzer = new WeatherAnalyzer();
 
-            WeatherAnalyzer weatherAnalyzer = new WeatherAnalyzer();//Två rader tillagda så weatherAnalyzer används
-
-            if (week.isEmpty()) { //Spärr om ingen vecka inlagd
+            if (week.isEmpty()) {
                 return;
             }
             DayForecast today = week.get(0);
@@ -138,13 +133,11 @@ public class MainActivity extends AppCompatActivity {
             textView2.setText(displayInput.displayRecommendation(RecommendationHandler.getInstance().getCurrentRecommendation().getText()));
             textView.setText(displayInput.displayWeather(rain));
 
-            //---Nytt för att testa bakgrundsändringar beroende på väder
             ConstraintLayout mainLayout = findViewById(R.id.main);
             mainLayout.setBackgroundResource(
                     displayInput.displayBackground(weatherType)
             );
 
-            //---Nytt för att testa ikonanvändning beroende på väderprognos
             ImageView weatherIcon = findViewById(R.id.weatherIcon_Homepage);
             weatherIcon.setImageResource(displayInput.displayWeatherIcon(weatherType));
             });
