@@ -120,6 +120,26 @@ public class DayForecast {
         }
     }
 
+    /**
+     * Determines the general weather type based on the daily forecast.
+     *
+     * <p>Returns "rain" if precipitation is expected,
+     * "cloudy" if the forecast indicates cloudy conditions,
+     * or "sun" otherwise. Rain takes priority over cloudiness.</p>
+     *
+     * @return the weather type as "rain", "cloudy", or "sun"
+     */
+    public String getWeatherType() {
+
+        if (rainy){
+            return "rain";
+        }
+        if (cloudy) {
+            return "cloudy";
+        }
+        return "sun";
+    }
+
     /** @return the date this forecast covers */
     public LocalDate getDate() {
         return date;

@@ -24,7 +24,7 @@ public class DisplayInput {
     /**
      * Returns the drawable resource id for the weather icon matching the given type.
      *
-     * @param weatherType "sun", "rain", or "cloudy", as returned by {@link WeatherAnalyzer#getWeatherType}
+     * @param weatherType "sun", "rain", or "cloudy", as returned by {@link DayForecast#getWeatherType}
      * @return a drawable resource id, or 0 if the weather type is unknown
      */
     public int displayWeatherIcon(String weatherType) {
@@ -43,7 +43,7 @@ public class DisplayInput {
     /**
      * Returns the drawable resource id for the background matching the given weather type.
      *
-     * @param weatherType "sun", "rain", or "cloudy", as returned by {@link WeatherAnalyzer#getWeatherType}
+     * @param weatherType "sun", "rain", or "cloudy", as returned by {@link DayForecast#getWeatherType}
      * @return a drawable resource id, or 0 if the weather type is unknown
      */
     public int displayBackground(String weatherType) {
@@ -72,7 +72,7 @@ public class DisplayInput {
     /**
      * Chooses the background color for a day card on the upcoming seven days page.
      *
-     * @param weatherType "sun", "rain", or "cloudy", as returned by {@link WeatherAnalyzer#getWeatherType}
+     * @param weatherType "sun", "rain", or "cloudy", as returned by {@link DayForecast#getWeatherType}
      * @return a color resource id, or 0 for no background if the weather type is unknown
      */
     public int displayDayBackgroundColor(String weatherType) {
