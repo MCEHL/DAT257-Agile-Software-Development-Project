@@ -105,13 +105,11 @@ import static com.example.whetherapp.ForecastQueryParameters.*;
                     return;
                 }
 
-
-                TextView textView2 = findViewById(R.id.textView3);
-                DisplayInput displayInput = new DisplayInput();
-
+                UIElementPicker uiElementPicker = UIElementPicker.getInstance();
 
                 TextView textView = findViewById(R.id.textView2);
-                DisplayInput displayInput2 = new DisplayInput();
+                TextView textView2 = findViewById(R.id.textView3);
+
 
                 if (week.isEmpty()) {
                     return;
@@ -128,16 +126,16 @@ import static com.example.whetherapp.ForecastQueryParameters.*;
                 recommendationHandler.compareToday(new ArrayList<>(recommendationHandler.getRecommendations()), today);
 
                 runOnUiThread(() -> {
-                    textView2.setText(displayInput.displayRecommendation(RecommendationHandler.getInstance().getCurrentRecommendation().getText()));
-                    textView.setText(displayInput.displayWeather(rain));
+                    textView2.setText(RecommendationHandler.getInstance().getCurrentRecommendation().getText());
+                    textView.setText(uiElementPicker.formatWeather(rain));
 
                     ConstraintLayout mainLayout = findViewById(R.id.main);
                     mainLayout.setBackgroundResource(
-                            displayInput.displayBackground(weatherType)
+                            uiElementPicker.pickBackground(weatherType)
                     );
 
                     ImageView weatherIcon = findViewById(R.id.weatherIcon_Homepage);
-                    weatherIcon.setImageResource(displayInput.displayWeatherIcon(weatherType));
+                    weatherIcon.setImageResource(uiElementPicker.pickWeatherIcon(weatherType));
                 });
             }).start();
 
