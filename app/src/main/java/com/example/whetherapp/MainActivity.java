@@ -110,7 +110,6 @@ import static com.example.whetherapp.ForecastQueryParameters.*;
                 TextView textView = findViewById(R.id.textView2);
                 TextView textView2 = findViewById(R.id.textView3);
 
-                WeatherAnalyzer weatherAnalyzer = new WeatherAnalyzer();
 
                 if (week.isEmpty()) {
                     return;
@@ -119,8 +118,8 @@ import static com.example.whetherapp.ForecastQueryParameters.*;
                 Log.d("WEATHERAPP", "Average cloudiness = " + today.getAverageCloudiness());
                 Log.d("WEATHERAPP", "Will rain = " + today.getRainy());
 
-                double rain = weatherAnalyzer.getRain(today);
-                String weatherType = weatherAnalyzer.getWeatherType(today);
+                double rain = today.getMaxAmountRain();
+                String weatherType = today.getWeatherType();
                 Log.d("WEATHERAPP", "Weather type = " + weatherType);
 
                 RecommendationHandler recommendationHandler = RecommendationHandler.getInstance();

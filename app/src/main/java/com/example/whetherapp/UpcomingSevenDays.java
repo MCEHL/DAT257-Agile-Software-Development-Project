@@ -20,8 +20,9 @@ import static com.example.whetherapp.ForecastQueryParameters.*;
  * Activity that displays weather forecasts for the upcoming seven days.
  *
  * <p>Displays a list of dates starting from tomorrow.
- * When a user selects a date, the corresponding forecast is retrieved
- * from the SMHI API and displayed in the selected day's card.</p>
+ * The forecast is retrieved from the SMHI API when the screen opens
+ * and each day's weather and recommendation is shown in its card.
+ * Tapping a card retrieves the forecast again, e.g. if the first attempt failed.</p>
  *
  * <p>The activity is accessed from the application's home screen
  * and provides navigation back to the previous screen.</p>
@@ -30,13 +31,14 @@ public class UpcomingSevenDays extends AppCompatActivity {
     private static final int DAYS_TO_SHOW = 7;
 
     private DayAdapter adapter;
+    private List<LocalDate> days;
 
     /**
      * Initializes the upcoming seven-day forecast screen.
      *
      * <p>Sets up the layout, back button, and RecyclerView containing
      * the upcoming dates. Configures the adapter to retrieve weather
-     * information when a date is selected.</p>
+     * information for all dates right away and again when a date is selected.</p>
      *
      * @param savedInstanceState the previously saved activity state,
      *                           or null if no saved state exists
@@ -51,8 +53,10 @@ public class UpcomingSevenDays extends AppCompatActivity {
 
         dayList.setLayoutManager(new LinearLayoutManager(this));
         dayList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        adapter = new DayAdapter(createUpcomingDays(), this::fetchForecastFor);
+        days = createUpcomingDays();
+        adapter = new DayAdapter(days, date -> fetchForecasts());
         dayList.setAdapter(adapter);
+        fetchForecasts();
     }
 
     /**
@@ -73,26 +77,26 @@ public class UpcomingSevenDays extends AppCompatActivity {
         return days;
     }
     /**
-     * Retrieves and displays the weather forecast for a selected date.
+     * Retrieves and displays the weather forecast for all upcoming dates.
      *
      * <p>Fetches forecast data from the SMHI API on a background thread
-     * and searches the returned forecasts for the requested date.
-     * Updates the corresponding card on the main UI thread.</p>
+     * in one request covering the whole week, and searches the returned
+     * forecasts for each date. Updates the cards on the main UI thread.</p>
      *
-     * <p>If the forecast cannot be retrieved or the requested date
-     * is unavailable, a notification is displayed to the user.</p>
-     *
-     * @param date the date for which the forecast should be retrieved
+     * <p>If the forecast cannot be retrieved or a date is unavailable,
+     * a notification is displayed to the user.</p>
      */
-    private void fetchForecastFor(LocalDate date) {
-        adapter.setLoading(date);
+    private void fetchForecasts() {
+        for (LocalDate date : days) {
+            adapter.setLoading(date);
+        }
 
         new Thread(() -> {
-            DayForecast forecast = null;
+            ArrayList<DayForecast> week = new ArrayList<>();
             try {
                 String response = new APICommunication().getForecast(
                         11.9059,
-                        57.8558,
+                        57.8558,  // should be a global variable as these numbers now appear multiple times
                         -1,
                         symbol_code,
                         cloud_area_fraction,
@@ -104,22 +108,27 @@ public class UpcomingSevenDays extends AppCompatActivity {
                         relative_humidity,
                         wind_speed
                 );
-                ArrayList<DayForecast> week = new ForecastBuilder().createForecasts(new JSONObject(response));
-                for (DayForecast day : week) {
-                    if (day.getDate().equals(date)) {
-                        forecast = day;
-                        break;
-                    }
-                }
+                week = new ForecastBuilder().createForecasts(new JSONObject(response));
             } catch (Exception e) {
-                Log.e("WHETHERAPP", "Kunde inte hämta prognos för " + date, e);
+                Log.e("WHETHERAPP", "Kunde inte hämta prognos", e);
             }
 
-            DayForecast result = forecast;
+            ArrayList<DayForecast> result = week;
             runOnUiThread(() -> {
-                adapter.setForecast(date, result);
-                if (result == null) {
-                    Toast.makeText(this, "No forecast available for " + date, Toast.LENGTH_SHORT).show();
+                boolean missing = false;
+                for (LocalDate date : days) {
+                    DayForecast forecast = null;
+                    for (DayForecast day : result) {
+                        if (day.getDate().equals(date)) {
+                            forecast = day;
+                            break;
+                        }
+                    }
+                    adapter.setForecast(date, forecast);
+                    missing |= forecast == null;
+                }
+                if (missing) {
+                    Toast.makeText(this, "Some forecasts are unavailable. Tap a day to retry", Toast.LENGTH_SHORT).show();
                 }
             });
         }).start();
